@@ -58,14 +58,32 @@ public class MasterCamera : MonoBehaviour
     {
         // Allows the player to zoom in and out. Very basic
         scrollWheel = Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
-        transform.Translate(Vector3.forward * scrollWheel * Time.deltaTime);
+
+        // hardcoding the maximum and minimum zooming distance (height limit)
+        if (transform.position.y > 2.5 && transform.position.y < 9)
+        {
+            transform.Translate(Vector3.forward * scrollWheel * Time.deltaTime);
+        }
+
+        // if maximum zooming distance is reached, then zoom out automatically
+        if (transform.position.y < 2.5)
+        {
+            transform.Translate(Vector3.back * Time.deltaTime);
+        }
+
+        // if maximum zooming distance is reached, then zoom in automatically
+        if (transform.position.y > 9)
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime);
+        }
     }
 
     void RotateAroundPoint()
     {
         // allows the camera to rotate around a singular point on the ground
         float horizontalMovement = Input.GetAxis("Mouse X");
-
+        
+        // if the scroll wheel button is held down, then you can move your mouse horizontal to rotate the camera around a point
         if (Input.GetMouseButton(2))
         {
             cameraOriginpoint.transform.RotateAround(focalPoint.transform.position, new Vector3(0, 1, 0), horizontalMovement * rotateSpeed * Time.deltaTime);

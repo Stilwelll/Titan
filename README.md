@@ -1,2 +1,2 @@
 # Titan
- a protfolio game
+ a portfolio game

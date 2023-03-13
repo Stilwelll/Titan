@@ -4,6 +4,7 @@ a Sci-Fi RTS gaming being built by Stilwell and Olithir
 Project: TItan is a placeholder name until a more official name is made.
 
 Stilwell - Programmer, UI Designer, Audio, Voice Actor
+
 Olithir - 3D Modeler, UI Designer, Voice Actor
 
 # Mission Statement

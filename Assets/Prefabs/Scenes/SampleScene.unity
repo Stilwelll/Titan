@@ -1699,7 +1699,12 @@ PrefabInstance:
     - target: {fileID: 2705439583737492424, guid: c459fe05fd79a5d45b52a5d03281abfd,
         type: 3}
       propertyPath: unitSpeed
-      value: 0.25
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2705439583737492424, guid: c459fe05fd79a5d45b52a5d03281abfd,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 2705439583737492424, guid: c459fe05fd79a5d45b52a5d03281abfd,
         type: 3}
@@ -1724,7 +1729,7 @@ PrefabInstance:
     - target: {fileID: 2982758441282406346, guid: c459fe05fd79a5d45b52a5d03281abfd,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.44
+      value: 2.429
       objectReference: {fileID: 0}
     - target: {fileID: 2982758441282406346, guid: c459fe05fd79a5d45b52a5d03281abfd,
         type: 3}

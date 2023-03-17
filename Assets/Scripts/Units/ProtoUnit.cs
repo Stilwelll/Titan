@@ -6,13 +6,13 @@ public class ProtoUnit : MonoBehaviour
 {
     public float unitHealth = 10.0f;
     public float detectionRange = 10.0f;
-    public float unitSpeed = 1.0f;
+    public float unitSpeed = 0.5f;
 
-    private GameObject enemy;
+    public GameObject enemy;
     // Start is called before the first frame update
     void Start()
     {
-        enemy = GameObject.Find("Enemy");
+
     }
 
     // Update is called once per frame
@@ -23,9 +23,10 @@ public class ProtoUnit : MonoBehaviour
 
     void EnemyDetection()
     {
-        if (Vector2.Distance(transform.position, enemy.transform.position) <= detectionRange & Vector2.Distance(transform.position, enemy.transform.position) > 0.25f)
+        if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemy.transform.position) > 1)
         {
-            transform.Translate(enemy.transform.position.x, 0, enemy.transform.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, unitSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.FromToRotation(transform.position, new Vector3(0, 0, enemy.transform.position.y));
         }
     }
 }

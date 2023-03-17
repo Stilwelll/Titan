@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 799662871044357822}
   - component: {fileID: 7975396259476643411}
   - component: {fileID: 3569270984168492685}
-  - component: {fileID: 6994761519795174473}
+  - component: {fileID: 155544551380662249}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -27,14 +27,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 545281530482173742}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.009807331, y: 0.00040841618, z: -0.0000040056652, w: 0.99995184}
   m_LocalPosition: {x: 4.303, y: 0.42, z: 0.473}
-  m_LocalScale: {x: 0.03, y: 0.03, z: 0.15}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!33 &799662871044357822
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6994761519795174473
+--- !u!114 &155544551380662249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,6 +107,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 545281530482173742}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d73132f91d08ea45aa8d80d3d286c7d, type: 3}
+  m_Script: {fileID: 11500000, guid: 29dc7fcfa8d48b748a7c9cde559b2ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectileSpeed: 0.025
+  projectileDestructionDelay: 1
+  spawnTime: 1
+  enemy: {fileID: 7563365646394578249, guid: c85837789a14967469eb8e76c793af2d, type: 3}

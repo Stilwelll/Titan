@@ -5,15 +5,19 @@ using UnityEngine;
 public class ProtoUnit : MonoBehaviour
 {
     public float unitHealth = 10.0f;
-    public float detectionRange = 10.0f;
+    public float detectionRange = 25.0f;
     public float unitSpeed = 1.0f;
     public float rotationSpeed = 5.0f;
 
     public GameObject enemy;
+    public GameObject projectile;
+    public GameObject gunMuzzle;
+    public GameObject unitFront;
+    public GameObject enemyFront;
     // Start is called before the first frame update
     void Start()
     {
-
+        InvokeRepeating("ShootProjectile", 1, 1);
     }
 
     // Update is called once per frame
@@ -25,15 +29,19 @@ public class ProtoUnit : MonoBehaviour
     void EnemyDetection()
     {
         // if the unit is within a certain distance then they will move towards the enemy until a set distance
-        if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemy.transform.position) > 1)
+        if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemy.transform.position) > 2)
         {
+            transform.LookAt(enemy.transform);
             transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, unitSpeed * Time.deltaTime);
         }
+    }
 
-        // the unit will rotate towards the enemy when detected
+    void ShootProjectile()
+    {
         if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, enemy.transform.rotation, rotationSpeed * Time.deltaTime);
+            Instantiate(projectile, gunMuzzle.transform.position, gunMuzzle.transform.rotation);
+            projectile.transform.LookAt(enemy.transform);
         }
     }
 }

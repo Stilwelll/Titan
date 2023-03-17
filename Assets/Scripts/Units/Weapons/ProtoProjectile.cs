@@ -4,29 +4,37 @@ using UnityEngine;
 
 public class ProtoProjectile : MonoBehaviour
 {
-    public float projectileSpeed = 1.0f;
-    public float projectileDestructionDelay = 0.5f;
+    public float projectileSpeed = 0.025f;
+    public float projectileDestructionDelay = 1.0f;
+    public float spawnTime = 1.0f;
+
+    public GameObject enemy;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        ProjectileMovement();
         DestroyAfterSetTime();
+        ProjectileMovement();
     }
 
-    void ProjectileMovement()
+    public void ProjectileMovement()
     {
         transform.Translate(0, 0, projectileSpeed);
     }
 
     void DestroyAfterSetTime()
     {
-        Destroy(gameObject, projectileDestructionDelay);
+        Destroy(gameObject, 3);
+    }
+
+    IEnumerator DestructionTimer(float projectileDestructionDelay)
+    {
+        yield return new WaitForSeconds(projectileDestructionDelay);
     }
 
 

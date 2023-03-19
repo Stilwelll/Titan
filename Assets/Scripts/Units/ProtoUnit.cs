@@ -29,19 +29,25 @@ public class ProtoUnit : MonoBehaviour
     void EnemyDetection()
     {
         // if the unit is within a certain distance then they will move towards the enemy until a set distance
-        if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemy.transform.position) > 2)
+        if (enemy ?? null)
         {
-            transform.LookAt(enemy.transform);
-            transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, unitSpeed * Time.deltaTime);
+            if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemy.transform.position) > 2)
+            {
+                transform.LookAt(enemy.transform);
+                transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, unitSpeed * Time.deltaTime);
+            }
         }
     }
 
     void ShootProjectile()
     {
-        if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange)
+        if (enemy ?? null)
         {
-            Instantiate(projectile, gunMuzzle.transform.position, gunMuzzle.transform.rotation);
-            projectile.transform.LookAt(enemy.transform);
+            if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange)
+            {
+                Instantiate(projectile, gunMuzzle.transform.position, gunMuzzle.transform.rotation);
+                projectile.transform.LookAt(enemy.transform);
+            }
         }
     }
 }

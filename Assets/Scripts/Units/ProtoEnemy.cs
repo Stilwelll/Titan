@@ -7,10 +7,9 @@ using UnityEngine.UI;
 public class ProtoEnemy : MonoBehaviour
 {
     public int enemyHealth = 10;
-    private float healthBarWidth = 2.3f;
+    public float enemyDetectionRange = 25;
 
     public GameObject unit;
-
     public GameObject projectile;
     public Image healthBarImage;
     public GameObject healthBarImageBackground;
@@ -24,13 +23,17 @@ public class ProtoEnemy : MonoBehaviour
     void Update()
     {
         WhenHealthDepleted();
+        FriendlyUnitDetected();
     }
 
-    void FriendlyUnityDetected()
+    void FriendlyUnitDetected()
     {
         if (unit ?? null)
         {
-            healthBarImageBackground.SetActive(true);
+            if (Vector3.Distance(transform.position, unit.transform.position) <= enemyDetectionRange)
+            {
+                healthBarImageBackground.SetActive(true);
+            }
         }
     }
 
@@ -40,7 +43,6 @@ public class ProtoEnemy : MonoBehaviour
         {
             enemyHealth -= 1;
             healthBarImage.rectTransform.sizeDelta = new Vector2(enemyHealth * 0.23f, healthBarImage.rectTransform.sizeDelta.y);
-            // healthBarImage.rectTransform.sizeDelta.Set(enemyHealth * 0.23f, 0);
             Destroy(other.gameObject);
         }
     }

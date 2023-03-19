@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class ProtoUnit : MonoBehaviour
 {
@@ -13,7 +15,6 @@ public class ProtoUnit : MonoBehaviour
     public GameObject projectile;
     public GameObject gunMuzzle;
     public GameObject unitFront;
-    public GameObject enemyFront;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,10 +32,20 @@ public class ProtoUnit : MonoBehaviour
         // if the unit is within a certain distance then they will move towards the enemy until a set distance
         if (enemy ?? null)
         {
-            if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemy.transform.position) > 2)
+            if (GameObject.FindGameObjectsWithTag("Enemy").Length > 1)
             {
-                transform.LookAt(enemy.transform);
-                transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, unitSpeed * Time.deltaTime);
+                GameObject enemyTarget = GameObject.FindWithTag("Enemy");
+
+                if (Vector3.Distance(transform.position, enemyTarget.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemyTarget.transform.position) > 2)
+                {
+                    transform.LookAt(enemyTarget.transform);
+                    transform.position = Vector3.MoveTowards(transform.position, enemyTarget.transform.position, unitSpeed * Time.deltaTime);
+                }
+                else if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemy.transform.position) > 2)
+                {
+                    transform.LookAt(enemy.transform);
+                    transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, unitSpeed * Time.deltaTime);
+                }
             }
         }
     }
@@ -43,10 +54,20 @@ public class ProtoUnit : MonoBehaviour
     {
         if (enemy ?? null)
         {
-            if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange)
+            if (GameObject.FindGameObjectsWithTag("Enemy").Length > 1)
             {
-                Instantiate(projectile, gunMuzzle.transform.position, gunMuzzle.transform.rotation);
-                projectile.transform.LookAt(enemy.transform);
+                GameObject enemyTarget = GameObject.FindWithTag("Enemy");
+
+                if (Vector3.Distance(transform.position, enemyTarget.transform.position) <= detectionRange)
+                {
+                    Instantiate(projectile, gunMuzzle.transform.position, gunMuzzle.transform.rotation);
+                    projectile.transform.LookAt(enemyTarget.transform);
+                }
+                else if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange)
+                {
+                    Instantiate(projectile, gunMuzzle.transform.position, gunMuzzle.transform.rotation);
+                    projectile.transform.LookAt(enemy.transform);
+                }
             }
         }
     }

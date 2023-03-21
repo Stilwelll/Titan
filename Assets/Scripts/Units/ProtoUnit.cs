@@ -18,57 +18,59 @@ public class ProtoUnit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("ShootProjectile", 1, 1);
+        if (enemy ?? null)
+        { 
+            InvokeRepeating("ShootProjectile", 1, 1);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        EnemyDetection();
+        if (enemy ?? null)
+        {
+            EnemyDetection();
+        }
     }
 
     void EnemyDetection()
     {
         // if the unit is within a certain distance then they will move towards the enemy until a set distance
-        if (enemy ?? null)
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length > 1)
         {
-            if (GameObject.FindGameObjectsWithTag("Enemy").Length > 1)
-            {
-                GameObject enemyTarget = GameObject.FindWithTag("Enemy");
+            GameObject enemyTarget = GameObject.FindWithTag("Enemy");
 
-                if (Vector3.Distance(transform.position, enemyTarget.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemyTarget.transform.position) > 2)
-                {
-                    transform.LookAt(enemyTarget.transform);
-                    transform.position = Vector3.MoveTowards(transform.position, enemyTarget.transform.position, unitSpeed * Time.deltaTime);
-                }
-                else if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemy.transform.position) > 2)
-                {
-                    transform.LookAt(enemy.transform);
-                    transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, unitSpeed * Time.deltaTime);
-                }
+            if (Vector3.Distance(transform.position, enemyTarget.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemyTarget.transform.position) > 2)
+            {
+                transform.LookAt(enemyTarget.transform);
+                transform.position = Vector3.MoveTowards(transform.position, enemyTarget.transform.position, unitSpeed * Time.deltaTime);
+            }
+            else if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange & Vector3.Distance(transform.position, enemy.transform.position) > 2)
+            {
+                transform.LookAt(enemy.transform);
+                transform.position = Vector3.MoveTowards(transform.position, enemy.transform.position, unitSpeed * Time.deltaTime);
             }
         }
+        
     }
 
     void ShootProjectile()
     {
-        if (enemy ?? null)
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length > 1)
         {
-            if (GameObject.FindGameObjectsWithTag("Enemy").Length > 1)
-            {
-                GameObject enemyTarget = GameObject.FindWithTag("Enemy");
+            GameObject enemyTarget = GameObject.FindWithTag("Enemy");
 
-                if (Vector3.Distance(transform.position, enemyTarget.transform.position) <= detectionRange)
-                {
-                    Instantiate(projectile, gunMuzzle.transform.position, gunMuzzle.transform.rotation);
-                    projectile.transform.LookAt(enemyTarget.transform);
-                }
-                else if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange)
-                {
-                    Instantiate(projectile, gunMuzzle.transform.position, gunMuzzle.transform.rotation);
-                    projectile.transform.LookAt(enemy.transform);
-                }
+            if (Vector3.Distance(transform.position, enemyTarget.transform.position) <= detectionRange)
+            {
+                Instantiate(projectile, gunMuzzle.transform.position, gunMuzzle.transform.rotation);
+                projectile.transform.LookAt(enemyTarget.transform);
             }
+            else if (Vector3.Distance(transform.position, enemy.transform.position) <= detectionRange)
+            {
+                Instantiate(projectile, gunMuzzle.transform.position, gunMuzzle.transform.rotation);
+                projectile.transform.LookAt(enemy.transform);
+            }
+            
         }
     }
 }

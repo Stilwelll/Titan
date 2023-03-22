@@ -9,36 +9,49 @@ public class ProtoEnemy : MonoBehaviour
     public int enemyHealth = 10;
     public float enemyDetectionRange = 25;
 
+    // Handles friendly units and their projectiles
     public GameObject unit;
     public GameObject projectile;
+
+    // Handles Unit Graphics
     public Image healthBarImage;
     public GameObject healthBarImageBackground;
+
+    // Uses the Enemy Unit Table to keep track of number of enemy units
+    private UnitManager eventSystemDict;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        // adding the enemy unit to the dictonary count
+        eventSystemDict = GameObject.Find("Event System").GetComponent<UnitManager>();
+
+        eventSystemDict.enemyUnitTable.Add(gameObject.GetInstanceID(), gameObject);
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        WhenHealthDepleted();
-        FriendlyUnitDetected();
+        if (unit ?? null)
+        {
+            WhenHealthDepleted();
+            FriendlyUnitDetected();
+        }
     }
 
     void FriendlyUnitDetected()
     {
-        if (unit ?? null)
+        // if a friendly unit is detected, its healthbar is displayed
+        if (Vector3.Distance(transform.position, unit.transform.position) <= enemyDetectionRange)
         {
-            if (Vector3.Distance(transform.position, unit.transform.position) <= enemyDetectionRange)
-            {
-                healthBarImageBackground.SetActive(true);
-            }
+            healthBarImageBackground.SetActive(true);
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
+        // when hit by a projectile, this units health is decreased
         if (other.gameObject.CompareTag("Projectile"))
         {
             enemyHealth -= 1;
@@ -46,11 +59,19 @@ public class ProtoEnemy : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+
     void WhenHealthDepleted()
     {
+        // when the units health reaches zero, the unit is destroyed
         if (enemyHealth <= 0)
         {
             Destroy(gameObject);
         }
+    }
+
+    void OnDestroy() 
+    {
+        // removes this enemy from the dictionary when destroyed
+       eventSystemDict.enemyUnitTable.Remove(gameObject.GetInstanceID());
     }
 }
